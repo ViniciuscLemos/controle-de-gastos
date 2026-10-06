@@ -1,0 +1,311 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  background: #f3f5f4;
+  color: #1f2a26;
+}
+
+.app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px 0 14px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 14px;
+  background: #2a9d6f;
+  color: #fff;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
+button.secundario {
+  background: #e4ece8;
+  color: #1f2a26;
+}
+
+button.link {
+  background: none;
+  padding: 2px 4px;
+  color: #2a7a5a;
+  font-size: 0.85rem;
+}
+
+button.link.perigo {
+  color: #c0392b;
+}
+
+.meses {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meses strong {
+  min-width: 170px;
+  text-align: center;
+}
+
+.meses button {
+  padding: 4px 12px;
+  font-size: 1.2rem;
+  background: #e4ece8;
+  color: #1f2a26;
+}
+
+.cartao {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  margin-bottom: 14px;
+}
+
+.cinza {
+  color: #6b7a74;
+  font-size: 0.85rem;
+}
+
+.verde { color: #1f8a5e; }
+.vermelho { color: #c0392b; }
+
+/* resumo */
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.resumo .cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resumo span {
+  color: #6b7a74;
+  font-size: 0.9rem;
+}
+
+.resumo strong {
+  font-size: 1.4rem;
+}
+
+.colunas {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+/* formulário */
+.formulario label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: #4b5853;
+}
+
+.formulario input,
+.formulario select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #cfd8d4;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f2a26;
+}
+
+.linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tipos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tipos button {
+  background: #eef2f0;
+  color: #4b5853;
+}
+
+.tipos button.ativo.saida {
+  background: #c0392b;
+  color: #fff;
+}
+
+.tipos button.ativo.entrada {
+  background: #1f8a5e;
+  color: #fff;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.erro {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin: 0 0 10px;
+}
+
+/* gráfico */
+.grafico {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.grafico li {
+  margin-bottom: 10px;
+}
+
+.grafico-texto {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.barra {
+  height: 8px;
+  background: #eef2f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barra div {
+  height: 100%;
+  background: #2a9d6f;
+  border-radius: 4px;
+}
+
+/* lista */
+.titulo-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.titulo-lista h2 {
+  margin: 0;
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista li {
+  display: grid;
+  grid-template-columns: 48px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #edf1ef;
+}
+
+.lista li:last-child {
+  border-bottom: none;
+}
+
+.data {
+  color: #6b7a74;
+  font-size: 0.85rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.info strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.botoes {
+  display: flex;
+}
+
+.vazio {
+  text-align: center;
+  color: #6b7a74;
+  padding: 30px 0;
+}
+
+footer {
+  text-align: center;
+  color: #6b7a74;
+  font-size: 0.85rem;
+  padding-top: 10px;
+}
+
+footer a {
+  color: inherit;
+}
+
+@media (max-width: 800px) {
+  .colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo strong {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .lista li {
+    grid-template-columns: 40px 1fr auto;
+  }
+
+  .botoes {
+    grid-column: 2 / -1;
+  }
+}
