@@ -35,7 +35,7 @@ npm test
 ## Algumas decisões
 
 - Os valores são guardados em centavos (número inteiro). Com `float` aparecem coisas tipo `0.1 + 0.2 = 0.30000000000000004`.
-- Dá pra digitar o valor como `25,90`, `25.90` ou `1.234,56`.
+- Dá pra digitar o valor como `25,90`, `25.90`, `1.234,56` ou `1.500` (o ponto com 3 dígitos depois vira milhar).
 - O CSV usa `;` como separador porque o Excel em português usa a vírgula nos decimais.
 - O site é publicado no GitHub Pages por um GitHub Action que roda os testes e faz o build a cada push.
 

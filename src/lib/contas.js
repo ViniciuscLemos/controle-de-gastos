@@ -6,10 +6,12 @@ export const CATEGORIAS = {
   entrada: ['Salário', 'Freela', 'Mesada', 'Outros'],
 };
 
-// "12,50" / "12.50" / "1.234,56" -> 1250 / 1250 / 123456 (ou null se não der)
+// "12,50" / "12.50" / "1.234,56" / "1.500" -> 1250 / 1250 / 123456 / 150000 (ou null se não der)
 export function lerValor(texto) {
   let limpo = String(texto).trim().replace(/[R$\s]/g, '');
   if (limpo.includes(',')) limpo = limpo.replace(/\./g, '').replace(',', '.');
+  // ponto seguido de 3 dígitos sem vírgula é milhar: "1.500" é mil e quinhentos
+  else if (/^\d{1,3}(\.\d{3})+$/.test(limpo)) limpo = limpo.replace(/\./g, '');
   if (!/^\d+(\.\d{1,2})?$/.test(limpo)) return null;
   const centavos = Math.round(Number(limpo) * 100);
   return centavos > 0 ? centavos : null;

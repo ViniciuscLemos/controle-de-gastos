@@ -14,6 +14,8 @@ describe('contas', () => {
     expect(lerValor('12,50')).toBe(1250);
     expect(lerValor('12.50')).toBe(1250);
     expect(lerValor('1.234,56')).toBe(123456);
+    expect(lerValor('1.500')).toBe(150000);
+    expect(lerValor('2.000.000')).toBe(200000000);
     expect(lerValor('R$ 10')).toBe(1000);
     expect(lerValor('0,1')).toBe(10);
     expect(lerValor('abc')).toBe(null);
