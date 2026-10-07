@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { doMes, gastosPorCategoria, lerValor, mudarMes, paraCsv, resumo } from './contas';
+import { doMes, formatarDinheiro, gastosPorCategoria, lerValor, mudarMes, nomeDoMes, paraCsv, resumo } from './contas';
 
 const lancamentos = [
   { id: 1, descricao: 'Salário', valor: 300000, tipo: 'entrada', categoria: 'Salário', data: '2026-10-05', criadoEm: 1 },
@@ -40,6 +40,14 @@ describe('contas', () => {
   it('muda de mês virando o ano', () => {
     expect(mudarMes('2026-12', 1)).toBe('2027-01');
     expect(mudarMes('2026-01', -1)).toBe('2025-12');
+  });
+
+  it('escreve o nome do mês e o valor em reais', () => {
+    expect(nomeDoMes('2026-10')).toBe('Outubro de 2026');
+    expect(nomeDoMes('2027-03')).toBe('Março de 2027');
+    // o toLocaleString usa um espaço que não quebra linha depois do R$
+    expect(formatarDinheiro(123456).replace(/\s/g, ' ')).toBe('R$ 1.234,56');
+    expect(formatarDinheiro(5).replace(/\s/g, ' ')).toBe('R$ 0,05');
   });
 
   it('gera o csv', () => {
