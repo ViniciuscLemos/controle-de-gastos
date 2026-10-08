@@ -40,6 +40,12 @@ export default function App() {
     setMes(mesDe(lancamento.data));
   }
 
+  function editar(lancamento) {
+    setEditando(lancamento);
+    // no celular o formulário fica lá em cima, longe da lista
+    document.querySelector('.formulario')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   function excluir(lancamento) {
     if (!confirm(`Excluir "${lancamento.descricao}"?`)) return;
     setLancamentos((lista) => lista.filter((l) => l.id !== lancamento.id));
@@ -87,12 +93,12 @@ export default function App() {
           </div>
 
           {doMesAtual.length > 0 ? (
-            <Lista lancamentos={doMesAtual} onEditar={setEditando} onExcluir={excluir} />
+            <Lista lancamentos={doMesAtual} onEditar={editar} onExcluir={excluir} />
           ) : (
             <div className="vazio">
               <p>Nada lançado em {nomeDoMes(mes).toLowerCase()}.</p>
               {lancamentos.length === 0 && (
-                <button className="secundario" onClick={() => setLancamentos(exemplo(mes))}>
+                <button className="secundario" onClick={() => setLancamentos(exemplo(mes, hoje()))}>
                   Carregar dados de exemplo
                 </button>
               )}
