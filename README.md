@@ -18,6 +18,8 @@ Fiz pra praticar React com um app que dá pra usar no dia a dia. Não tem login 
 - ver o total de entradas, gastos e o saldo do mês
 - ver os gastos por categoria num gráfico de barras
 - exportar o mês em CSV (abre direto no Excel)
+- instalar no celular como app (no Chrome aparece "Adicionar à tela inicial"), e ele abre mesmo sem internet
+- modo escuro, que segue o tema do celular ou do computador
 
 Se abrir pela primeira vez, tem um botão pra carregar uns dados de exemplo e ver como fica.
 
@@ -45,6 +47,7 @@ npm test
 - Os valores são guardados em centavos (número inteiro). Com `float` aparecem coisas tipo `0.1 + 0.2 = 0.30000000000000004`.
 - Dá pra digitar o valor como `25,90`, `25.90`, `1.234,56` ou `1.500` (o ponto com 3 dígitos depois vira milhar).
 - O CSV usa `;` como separador porque o Excel em português usa a vírgula nos decimais.
+- Pra virar app instalável foi preciso um `manifest.webmanifest` e um service worker (`public/sw.js`). O service worker tenta sempre a internet primeiro e guarda uma cópia, assim ninguém fica preso numa versão antiga, e sem internet ele usa a cópia.
 - O site é publicado no GitHub Pages por um GitHub Action que roda os testes e faz o build a cada push.
 
 ## Estrutura
