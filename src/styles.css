@@ -110,12 +110,14 @@ button.link.perigo {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
+  margin-bottom: 14px;
 }
 
 .resumo .cartao {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-bottom: 0;
 }
 
 .resumo span {
@@ -304,8 +306,17 @@ footer a {
 }
 
 @media (max-width: 500px) {
+  /* no celular cada total vira uma linha só, senão os 3 cartões ocupam a tela inteira */
   .resumo {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .resumo .cartao {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
   }
 
   .lista li {
