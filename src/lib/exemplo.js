@@ -16,14 +16,19 @@ const DADOS = [
   [22, 'saida', 'Show', 'Lazer', 15000],
 ];
 
-export function exemplo(mes) {
+// No mês atual os dias são espremidos até hoje, senão aparece gasto com data no futuro
+export function exemplo(mes, hoje) {
+  const diaDeHoje = Number(hoje.slice(8, 10));
+  const ajustar = (dia) =>
+    mes === hoje.slice(0, 7) && diaDeHoje < 22 ? Math.max(1, Math.round((dia * diaDeHoje) / 22)) : dia;
+
   return DADOS.map(([dia, tipo, descricao, categoria, valor], i) => ({
     id: `exemplo-${i}`,
     tipo,
     descricao,
     categoria,
     valor,
-    data: `${mes}-${String(dia).padStart(2, '0')}`,
+    data: `${mes}-${String(ajustar(dia)).padStart(2, '0')}`,
     criadoEm: i,
   }));
 }

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { exemplo } from './exemplo';
 import { doMes, formatarDinheiro, gastosPorCategoria, lerValor, mudarMes, nomeDoMes, paraCsv, resumo } from './contas';
 
 const lancamentos = [
@@ -57,5 +58,12 @@ describe('contas', () => {
     expect(csv[0]).toBe('Data;Descrição;Categoria;Tipo;Valor');
     expect(csv[1]).toBe('06/10/2026;"Mercado";Alimentação;Saída;-450,90');
     expect(csv[2]).toBe('05/10/2026;"Salário ""out""";Salário;Entrada;3000,00');
+  });
+
+  it('dados de exemplo do mês atual não ficam no futuro', () => {
+    const datas = exemplo('2026-10', '2026-10-08').map((l) => l.data);
+    expect(datas.every((d) => d >= '2026-10-01' && d <= '2026-10-08')).toBe(true);
+    // em outro mês usa os dias normais
+    expect(exemplo('2026-09', '2026-10-08').at(-1).data).toBe('2026-09-22');
   });
 });
