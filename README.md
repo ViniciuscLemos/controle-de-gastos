@@ -4,6 +4,8 @@ App pra anotar as entradas e os gastos do mês e ver pra onde o dinheiro está i
 
 **Dá pra usar aqui:** https://viniciusclemos.github.io/controle-de-gastos/
 
+![Controle de Gastos com os dados de exemplo](docs/print.png)
+
 Fiz pra praticar React com um app que dá pra usar no dia a dia. Não tem login nem servidor: os dados ficam salvos no próprio navegador (localStorage).
 
 ## O que dá pra fazer
@@ -16,6 +18,10 @@ Fiz pra praticar React com um app que dá pra usar no dia a dia. Não tem login 
 - exportar o mês em CSV (abre direto no Excel)
 
 Se abrir pela primeira vez, tem um botão pra carregar uns dados de exemplo e ver como fica.
+
+No celular o layout vira uma coluna só:
+
+<img src="docs/print-celular.png" alt="Controle de Gastos no celular" width="300">
 
 ## Rodando
 
