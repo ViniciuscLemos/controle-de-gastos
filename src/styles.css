@@ -1,3 +1,39 @@
+:root {
+  color-scheme: light dark;
+  --fundo: #f3f5f4;
+  --cartao: #fff;
+  --texto: #1f2a26;
+  --cinza: #6b7a74;
+  --rotulo: #4b5853;
+  --secundario: #e4ece8;
+  --suave: #eef2f0;
+  --borda: #cfd8d4;
+  --linha: #edf1ef;
+  --link: #2a7a5a;
+  --vermelho: #c0392b;
+  --verde: #1f8a5e;
+  --sombra: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* segue o tema do sistema (celular ou computador no modo escuro) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #121715;
+    --cartao: #1b2320;
+    --texto: #e3ebe7;
+    --cinza: #93a29c;
+    --rotulo: #b3c0bb;
+    --secundario: #2a3531;
+    --suave: #26302c;
+    --borda: #3a4743;
+    --linha: #26302c;
+    --link: #5fcf9f;
+    --vermelho: #ff7b6b;
+    --verde: #4fd39a;
+    --sombra: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -5,8 +41,8 @@
 body {
   margin: 0;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  background: #f3f5f4;
-  color: #1f2a26;
+  background: var(--fundo);
+  color: var(--texto);
 }
 
 .app {
@@ -56,19 +92,19 @@ button:focus-visible,
 }
 
 button.secundario {
-  background: #e4ece8;
-  color: #1f2a26;
+  background: var(--secundario);
+  color: var(--texto);
 }
 
 button.link {
   background: none;
   padding: 2px 4px;
-  color: #2a7a5a;
+  color: var(--link);
   font-size: 0.85rem;
 }
 
 button.link.perigo {
-  color: #c0392b;
+  color: var(--vermelho);
 }
 
 .meses {
@@ -85,25 +121,25 @@ button.link.perigo {
 .meses button {
   padding: 4px 12px;
   font-size: 1.2rem;
-  background: #e4ece8;
-  color: #1f2a26;
+  background: var(--secundario);
+  color: var(--texto);
 }
 
 .cartao {
-  background: #fff;
+  background: var(--cartao);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--sombra);
   margin-bottom: 14px;
 }
 
 .cinza {
-  color: #6b7a74;
+  color: var(--cinza);
   font-size: 0.85rem;
 }
 
-.verde { color: #1f8a5e; }
-.vermelho { color: #c0392b; }
+.verde { color: var(--verde); }
+.vermelho { color: var(--vermelho); }
 
 /* resumo */
 .resumo {
@@ -121,7 +157,7 @@ button.link.perigo {
 }
 
 .resumo span {
-  color: #6b7a74;
+  color: var(--cinza);
   font-size: 0.9rem;
 }
 
@@ -143,17 +179,17 @@ button.link.perigo {
   gap: 4px;
   margin-bottom: 10px;
   font-size: 0.85rem;
-  color: #4b5853;
+  color: var(--rotulo);
 }
 
 .formulario input,
 .formulario select {
   font: inherit;
   padding: 8px 10px;
-  border: 1px solid #cfd8d4;
+  border: 1px solid var(--borda);
   border-radius: 8px;
-  background: #fff;
-  color: #1f2a26;
+  background: var(--cartao);
+  color: var(--texto);
 }
 
 .linha {
@@ -170,8 +206,8 @@ button.link.perigo {
 }
 
 .tipos button {
-  background: #eef2f0;
-  color: #4b5853;
+  background: var(--suave);
+  color: var(--rotulo);
 }
 
 .tipos button.ativo.saida {
@@ -190,7 +226,7 @@ button.link.perigo {
 }
 
 .erro {
-  color: #c0392b;
+  color: var(--vermelho);
   font-size: 0.85rem;
   margin: 0 0 10px;
 }
@@ -215,7 +251,7 @@ button.link.perigo {
 
 .barra {
   height: 8px;
-  background: #eef2f0;
+  background: var(--suave);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -250,7 +286,7 @@ button.link.perigo {
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-bottom: 1px solid #edf1ef;
+  border-bottom: 1px solid var(--linha);
 }
 
 .lista li:last-child {
@@ -258,7 +294,7 @@ button.link.perigo {
 }
 
 .data {
-  color: #6b7a74;
+  color: var(--cinza);
   font-size: 0.85rem;
 }
 
@@ -280,13 +316,13 @@ button.link.perigo {
 
 .vazio {
   text-align: center;
-  color: #6b7a74;
+  color: var(--cinza);
   padding: 30px 0;
 }
 
 footer {
   text-align: center;
-  color: #6b7a74;
+  color: var(--cinza);
   font-size: 0.85rem;
   padding-top: 10px;
 }
