@@ -1,5 +1,7 @@
 # Controle de Gastos
 
+![Testes e deploy](https://github.com/ViniciuscLemos/controle-de-gastos/actions/workflows/deploy.yml/badge.svg)
+
 App pra anotar as entradas e os gastos do mês e ver pra onde o dinheiro está indo. Feito com React + Vite.
 
 **Dá pra usar aqui:** https://viniciusclemos.github.io/controle-de-gastos/
