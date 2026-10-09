@@ -9,7 +9,7 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>
 );
 
-// só em produção: no dev o service worker guardaria cópia dos arquivos e atrapalharia o hot reload
+// production only: in dev the service worker would cache the files and get in the way of hot reload
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`);
 }

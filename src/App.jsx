@@ -1,63 +1,63 @@
 import { useEffect, useState } from 'react';
-import { doMes, hoje, mesDe, mudarMes, nomeDoMes, paraCsv, resumo } from './lib/contas';
-import { exemplo } from './lib/exemplo';
-import Formulario from './components/Formulario';
-import Resumo from './components/Resumo';
-import Grafico from './components/Grafico';
-import Lista from './components/Lista';
+import { inMonth, monthName, monthOf, shiftMonth, summary, toCsv, today } from './lib/finance';
+import { sample } from './lib/sample';
+import EntryForm from './components/EntryForm';
+import Summary from './components/Summary';
+import Chart from './components/Chart';
+import EntryList from './components/EntryList';
 
-function carregar() {
+function load() {
   try {
-    return JSON.parse(localStorage.getItem('lancamentos')) || [];
+    return JSON.parse(localStorage.getItem('entries')) || [];
   } catch {
     return [];
   }
 }
 
 export default function App() {
-  const [lancamentos, setLancamentos] = useState(carregar);
-  const [mes, setMes] = useState(mesDe(hoje()));
-  const [editando, setEditando] = useState(null);
+  const [entries, setEntries] = useState(load);
+  const [month, setMonth] = useState(monthOf(today()));
+  const [editing, setEditing] = useState(null);
 
   useEffect(() => {
     try {
-      localStorage.setItem('lancamentos', JSON.stringify(lancamentos));
+      localStorage.setItem('entries', JSON.stringify(entries));
     } catch {
-      // sem localStorage (aba anônima), só não salva
+      // no localStorage (private tab), it just doesn't save
     }
-  }, [lancamentos]);
+  }, [entries]);
 
-  const doMesAtual = doMes(lancamentos, mes);
+  const currentMonth = inMonth(entries, month);
 
-  function salvar(lancamento) {
-    if (editando) {
-      setLancamentos((lista) => lista.map((l) => (l.id === editando.id ? { ...l, ...lancamento } : l)));
-      setEditando(null);
+  function save(entry) {
+    if (editing) {
+      setEntries((list) => list.map((e) => (e.id === editing.id ? { ...e, ...entry } : e)));
+      setEditing(null);
     } else {
-      setLancamentos((lista) => [...lista, { ...lancamento, id: crypto.randomUUID(), criadoEm: Date.now() }]);
+      setEntries((list) => [...list, { ...entry, id: crypto.randomUUID(), createdAt: Date.now() }]);
     }
-    // se lançou em outro mês, vai pra ele pra pessoa ver que entrou
-    setMes(mesDe(lancamento.data));
+    // if it went into another month, jump there so the person sees it was added
+    setMonth(monthOf(entry.date));
   }
 
-  function editar(lancamento) {
-    setEditando(lancamento);
-    // no celular o formulário fica lá em cima, longe da lista
-    document.querySelector('.formulario')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function edit(entry) {
+    setEditing(entry);
+    // on the phone the form sits at the top, far from the list
+    document.querySelector('.entry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function excluir(lancamento) {
-    if (!confirm(`Excluir "${lancamento.descricao}"?`)) return;
-    setLancamentos((lista) => lista.filter((l) => l.id !== lancamento.id));
-    if (editando?.id === lancamento.id) setEditando(null);
+  function remove(entry) {
+    if (!confirm(`Delete "${entry.description}"?`)) return;
+    setEntries((list) => list.filter((e) => e.id !== entry.id));
+    if (editing?.id === entry.id) setEditing(null);
   }
 
-  function exportar() {
-    // o ﻿ no começo é pro Excel abrir os acentos certo
-    const blob = new Blob(['﻿' + paraCsv(doMesAtual)], { type: 'text/csv;charset=utf-8' });
+  function exportCsv() {
+    // the BOM at the start makes Excel read accents right
+    const blob = new Blob(['﻿' + toCsv(currentMonth)], { type: 'text/csv;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `gastos-${mes}.csv`;
+    link.download = `expenses-${month}.csv`;
     link.click();
     URL.revokeObjectURL(link.href);
   }
@@ -65,41 +65,41 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <h1>Controle de Gastos</h1>
-        <div className="meses">
-          <button onClick={() => setMes(mudarMes(mes, -1))} aria-label="Mês anterior">‹</button>
-          <strong>{nomeDoMes(mes)}</strong>
-          <button onClick={() => setMes(mudarMes(mes, 1))} aria-label="Próximo mês">›</button>
+        <h1>Expense Tracker</h1>
+        <div className="month-nav">
+          <button onClick={() => setMonth(shiftMonth(month, -1))} aria-label="Previous month">‹</button>
+          <strong>{monthName(month)}</strong>
+          <button onClick={() => setMonth(shiftMonth(month, 1))} aria-label="Next month">›</button>
         </div>
       </header>
 
-      <Resumo {...resumo(doMesAtual)} />
+      <Summary {...summary(currentMonth)} />
 
-      <div className="colunas">
+      <div className="columns">
         <div>
-          <Formulario
-            key={editando?.id || 'novo'}
-            editando={editando}
-            onSalvar={salvar}
-            onCancelar={() => setEditando(null)}
+          <EntryForm
+            key={editing?.id || 'new'}
+            editing={editing}
+            onSave={save}
+            onCancel={() => setEditing(null)}
           />
-          <Grafico lancamentos={doMesAtual} />
+          <Chart entries={currentMonth} />
         </div>
 
-        <section className="cartao">
-          <div className="titulo-lista">
-            <h2>Lançamentos</h2>
-            {doMesAtual.length > 0 && <button className="secundario" onClick={exportar}>Exportar CSV</button>}
+        <section className="card">
+          <div className="list-header">
+            <h2>Entries</h2>
+            {currentMonth.length > 0 && <button className="secondary" onClick={exportCsv}>Export CSV</button>}
           </div>
 
-          {doMesAtual.length > 0 ? (
-            <Lista lancamentos={doMesAtual} onEditar={editar} onExcluir={excluir} />
+          {currentMonth.length > 0 ? (
+            <EntryList entries={currentMonth} onEdit={edit} onDelete={remove} />
           ) : (
-            <div className="vazio">
-              <p>Nada lançado em {nomeDoMes(mes).toLowerCase()}.</p>
-              {lancamentos.length === 0 && (
-                <button className="secundario" onClick={() => setLancamentos(exemplo(mes, hoje()))}>
-                  Carregar dados de exemplo
+            <div className="empty">
+              <p>Nothing added in {monthName(month)}.</p>
+              {entries.length === 0 && (
+                <button className="secondary" onClick={() => setEntries(sample(month, today()))}>
+                  Load sample data
                 </button>
               )}
             </div>
@@ -108,7 +108,7 @@ export default function App() {
       </div>
 
       <footer>
-        Os dados ficam salvos só no seu navegador · feito por{' '}
+        Your data is only saved in your browser · made by{' '}
         <a href="https://github.com/ViniciuscLemos" target="_blank" rel="noreferrer">Vinicius Lemos</a>
       </footer>
     </div>

@@ -1,16 +1,16 @@
 {
-  "name": "Controle de Gastos",
-  "short_name": "Gastos",
-  "description": "Anote as entradas e os gastos do mês e veja pra onde o dinheiro está indo.",
-  "lang": "pt-BR",
+  "name": "Expense Tracker",
+  "short_name": "Expenses",
+  "description": "Write down the month's income and expenses and see where the money is going.",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f3f5f4",
   "theme_color": "#2a9d6f",
   "icons": [
-    { "src": "icone-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

@@ -1,61 +1,63 @@
-# Controle de Gastos
+# Expense Tracker
 
-![Testes e deploy](https://github.com/ViniciuscLemos/controle-de-gastos/actions/workflows/deploy.yml/badge.svg)
+![Tests and deploy](https://github.com/ViniciuscLemos/expense-tracker/actions/workflows/deploy.yml/badge.svg)
 
-App pra anotar as entradas e os gastos do mês e ver pra onde o dinheiro está indo. Feito com React + Vite.
+An app to write down the month's income and expenses and see where the money is going. Built with React + Vite.
 
-**Dá pra usar aqui:** https://viniciusclemos.github.io/controle-de-gastos/
+**Try it here:** https://viniciusclemos.github.io/expense-tracker/
 
-![Controle de Gastos com os dados de exemplo](docs/print.png)
+![Expense Tracker with the sample data](docs/screenshot.png)
 
-Fiz pra praticar React com um app que dá pra usar no dia a dia. Não tem login nem servidor: os dados ficam salvos no próprio navegador (localStorage).
+I made it to practice React with an app I could actually use day to day. There's no login and no server: the data is saved in the browser itself (localStorage).
 
-## O que dá pra fazer
+## What you can do
 
-- lançar gastos e entradas com categoria e data
-- editar e excluir lançamentos
-- navegar entre os meses
-- ver o total de entradas, gastos e o saldo do mês
-- ver os gastos por categoria num gráfico de barras
-- exportar o mês em CSV (abre direto no Excel)
-- instalar no celular como app (no Chrome aparece "Adicionar à tela inicial"), e ele abre mesmo sem internet
-- modo escuro, que segue o tema do celular ou do computador
+- add expenses and income with a category and a date
+- edit and delete entries
+- move between months
+- see the month's total income, expenses and balance
+- see expenses by category in a bar chart
+- export the month to CSV (opens straight in Excel)
+- install it on your phone as an app (Chrome shows "Add to home screen"), and it opens even without internet
+- dark mode, which follows the phone or computer theme
 
-Se abrir pela primeira vez, tem um botão pra carregar uns dados de exemplo e ver como fica.
+The first time you open it, there's a button to load some sample data and see how it looks.
 
-No celular o layout vira uma coluna só:
+On the phone the layout turns into a single column, and in dark mode it looks like this:
 
-<img src="docs/print-celular.png" alt="Controle de Gastos no celular" width="300">
+<p>
+  <img src="docs/screenshot-mobile.png" alt="Expense Tracker on the phone" width="300">
+  <img src="docs/screenshot-dark.png" alt="Expense Tracker in dark mode" width="520">
+</p>
 
-## Rodando
+## Running
 
 ```bash
-git clone https://github.com/ViniciuscLemos/controle-de-gastos
-cd controle-de-gastos
+git clone https://github.com/ViniciuscLemos/expense-tracker
+cd expense-tracker
 npm install
 npm run dev
 ```
 
-Testes:
+Tests:
 
 ```bash
 npm test
 ```
 
-## Algumas decisões
+## Some decisions
 
-- Os valores são guardados em centavos (número inteiro). Com `float` aparecem coisas tipo `0.1 + 0.2 = 0.30000000000000004`.
-- Dá pra digitar o valor como `25,90`, `25.90`, `1.234,56` ou `1.500` (o ponto com 3 dígitos depois vira milhar).
-- O CSV usa `;` como separador porque o Excel em português usa a vírgula nos decimais.
-- Pra virar app instalável foi preciso um `manifest.webmanifest` e um service worker (`public/sw.js`). O service worker tenta sempre a internet primeiro e guarda uma cópia, assim ninguém fica preso numa versão antiga, e sem internet ele usa a cópia.
-- O site é publicado no GitHub Pages por um GitHub Action que roda os testes e faz o build a cada push.
+- Amounts are stored in cents (integers). With floats you get things like `0.1 + 0.2 = 0.30000000000000004`.
+- You can type the amount as `25.90`, `1,234.56`, `1,500` or even `25,90` (for people used to a decimal comma).
+- To make it installable I needed a `manifest.webmanifest` and a service worker (`public/sw.js`). The service worker always tries the network first and keeps a copy, so nobody gets stuck on an old version, and without internet it uses the copy.
+- The site is published to GitHub Pages by a GitHub Action that runs the tests and builds it on every push.
 
-## Estrutura
+## Structure
 
 ```
 src/
-  App.jsx           estado principal e salvamento
-  components/       Formulario, Resumo, Grafico, Lista
-  lib/contas.js     cálculos (resumo do mês, categorias, csv...)
-  lib/exemplo.js    dados de exemplo
+  App.jsx           main state and saving
+  components/       EntryForm, Summary, Chart, EntryList
+  lib/finance.js    calculations (month summary, categories, csv...)
+  lib/sample.js     sample data
 ```

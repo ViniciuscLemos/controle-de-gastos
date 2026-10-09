@@ -1,36 +1,36 @@
 :root {
   color-scheme: light dark;
-  --fundo: #f3f5f4;
-  --cartao: #fff;
-  --texto: #1f2a26;
-  --cinza: #6b7a74;
-  --rotulo: #4b5853;
-  --secundario: #e4ece8;
-  --suave: #eef2f0;
-  --borda: #cfd8d4;
-  --linha: #edf1ef;
+  --bg: #f3f5f4;
+  --card: #fff;
+  --text: #1f2a26;
+  --muted: #6b7a74;
+  --label: #4b5853;
+  --secondary: #e4ece8;
+  --soft: #eef2f0;
+  --border: #cfd8d4;
+  --line: #edf1ef;
   --link: #2a7a5a;
-  --vermelho: #c0392b;
-  --verde: #1f8a5e;
-  --sombra: 0 1px 4px rgba(0, 0, 0, 0.06);
+  --red: #c0392b;
+  --green: #1f8a5e;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
-/* segue o tema do sistema (celular ou computador no modo escuro) */
+/* follows the system theme (phone or computer in dark mode) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --fundo: #121715;
-    --cartao: #1b2320;
-    --texto: #e3ebe7;
-    --cinza: #93a29c;
-    --rotulo: #b3c0bb;
-    --secundario: #2a3531;
-    --suave: #26302c;
-    --borda: #3a4743;
-    --linha: #26302c;
+    --bg: #121715;
+    --card: #1b2320;
+    --text: #e3ebe7;
+    --muted: #93a29c;
+    --label: #b3c0bb;
+    --secondary: #2a3531;
+    --soft: #26302c;
+    --border: #3a4743;
+    --line: #26302c;
     --link: #5fcf9f;
-    --vermelho: #ff7b6b;
-    --verde: #4fd39a;
-    --sombra: 0 1px 4px rgba(0, 0, 0, 0.4);
+    --red: #ff7b6b;
+    --green: #4fd39a;
+    --shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -41,8 +41,8 @@
 body {
   margin: 0;
   font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  background: var(--fundo);
-  color: var(--texto);
+  background: var(--bg);
+  color: var(--text);
 }
 
 .app {
@@ -85,15 +85,15 @@ button:hover {
 }
 
 button:focus-visible,
-.formulario input:focus-visible,
-.formulario select:focus-visible {
+.entry-form input:focus-visible,
+.entry-form select:focus-visible {
   outline: 2px solid #2a9d6f;
   outline-offset: 2px;
 }
 
-button.secundario {
-  background: var(--secundario);
-  color: var(--texto);
+button.secondary {
+  background: var(--secondary);
+  color: var(--text);
 }
 
 button.link {
@@ -103,198 +103,198 @@ button.link {
   font-size: 0.85rem;
 }
 
-button.link.perigo {
-  color: var(--vermelho);
+button.link.danger {
+  color: var(--red);
 }
 
-.meses {
+.month-nav {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.meses strong {
+.month-nav strong {
   min-width: 170px;
   text-align: center;
 }
 
-.meses button {
+.month-nav button {
   padding: 4px 12px;
   font-size: 1.2rem;
-  background: var(--secundario);
-  color: var(--texto);
+  background: var(--secondary);
+  color: var(--text);
 }
 
-.cartao {
-  background: var(--cartao);
+.card {
+  background: var(--card);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: var(--sombra);
+  box-shadow: var(--shadow);
   margin-bottom: 14px;
 }
 
-.cinza {
-  color: var(--cinza);
+.muted {
+  color: var(--muted);
   font-size: 0.85rem;
 }
 
-.verde { color: var(--verde); }
-.vermelho { color: var(--vermelho); }
+.green { color: var(--green); }
+.red { color: var(--red); }
 
-/* resumo */
-.resumo {
+/* summary */
+.summary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
   margin-bottom: 14px;
 }
 
-.resumo .cartao {
+.summary .card {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-bottom: 0;
 }
 
-.resumo span {
-  color: var(--cinza);
+.summary span {
+  color: var(--muted);
   font-size: 0.9rem;
 }
 
-.resumo strong {
+.summary strong {
   font-size: 1.4rem;
 }
 
-.colunas {
+.columns {
   display: grid;
   grid-template-columns: 360px 1fr;
   gap: 14px;
   align-items: start;
 }
 
-/* formulário */
-.formulario label {
+/* form */
+.entry-form label {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-bottom: 10px;
   font-size: 0.85rem;
-  color: var(--rotulo);
+  color: var(--label);
 }
 
-.formulario input,
-.formulario select {
+.entry-form input,
+.entry-form select {
   font: inherit;
   padding: 8px 10px;
-  border: 1px solid var(--borda);
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--cartao);
-  color: var(--texto);
+  background: var(--card);
+  color: var(--text);
 }
 
-.linha {
+.row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
-.tipos {
+.types {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
   margin-bottom: 12px;
 }
 
-.tipos button {
-  background: var(--suave);
-  color: var(--rotulo);
+.types button {
+  background: var(--soft);
+  color: var(--label);
 }
 
-.tipos button.ativo.saida {
+.types button.active.expense {
   background: #c0392b;
   color: #fff;
 }
 
-.tipos button.ativo.entrada {
+.types button.active.income {
   background: #1f8a5e;
   color: #fff;
 }
 
-.acoes {
+.actions {
   display: flex;
   gap: 8px;
 }
 
-.erro {
-  color: var(--vermelho);
+.error {
+  color: var(--red);
   font-size: 0.85rem;
   margin: 0 0 10px;
 }
 
-/* gráfico */
-.grafico {
+/* chart */
+.chart {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.grafico li {
+.chart li {
   margin-bottom: 10px;
 }
 
-.grafico-texto {
+.chart-text {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
   margin-bottom: 4px;
 }
 
-.barra {
+.bar {
   height: 8px;
-  background: var(--suave);
+  background: var(--soft);
   border-radius: 4px;
   overflow: hidden;
 }
 
-.barra div {
+.bar div {
   height: 100%;
   background: #2a9d6f;
   border-radius: 4px;
 }
 
-/* lista */
-.titulo-lista {
+/* list */
+.list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 4px;
 }
 
-.titulo-lista h2 {
+.list-header h2 {
   margin: 0;
 }
 
-.lista {
+.entry-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.lista li {
+.entry-list li {
   display: grid;
   grid-template-columns: 48px 1fr auto auto;
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-bottom: 1px solid var(--linha);
+  border-bottom: 1px solid var(--line);
 }
 
-.lista li:last-child {
+.entry-list li:last-child {
   border-bottom: none;
 }
 
-.data {
-  color: var(--cinza);
+.date {
+  color: var(--muted);
   font-size: 0.85rem;
 }
 
@@ -310,19 +310,19 @@ button.link.perigo {
   white-space: nowrap;
 }
 
-.botoes {
+.buttons {
   display: flex;
 }
 
-.vazio {
+.empty {
   text-align: center;
-  color: var(--cinza);
+  color: var(--muted);
   padding: 30px 0;
 }
 
 footer {
   text-align: center;
-  color: var(--cinza);
+  color: var(--muted);
   font-size: 0.85rem;
   padding-top: 10px;
 }
@@ -332,34 +332,34 @@ footer a {
 }
 
 @media (max-width: 800px) {
-  .colunas {
+  .columns {
     grid-template-columns: 1fr;
   }
 
-  .resumo strong {
+  .summary strong {
     font-size: 1.1rem;
   }
 }
 
 @media (max-width: 500px) {
-  /* no celular cada total vira uma linha só, senão os 3 cartões ocupam a tela inteira */
-  .resumo {
+  /* on the phone each total becomes a single row, otherwise the 3 cards take up the whole screen */
+  .summary {
     grid-template-columns: 1fr;
     gap: 8px;
   }
 
-  .resumo .cartao {
+  .summary .card {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px;
   }
 
-  .lista li {
+  .entry-list li {
     grid-template-columns: 40px 1fr auto;
   }
 
-  .botoes {
+  .buttons {
     grid-column: 2 / -1;
   }
 }
