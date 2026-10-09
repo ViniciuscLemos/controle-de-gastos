@@ -262,6 +262,96 @@ button.link.danger {
   border-radius: 4px;
 }
 
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+
+.donut {
+  display: block;
+  width: 170px;
+  margin: 0 auto 14px;
+}
+
+.donut-label {
+  font-size: 10px;
+  fill: var(--muted);
+}
+
+.donut-total {
+  font-size: 14px;
+  font-weight: 700;
+  fill: var(--text);
+}
+
+/* last 6 months */
+.trend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.legend {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.legend .dot {
+  margin: 0 4px 0 8px;
+}
+
+.dot.income, .trend-bar.income { background: var(--green); }
+.dot.expense, .trend-bar.expense { background: var(--red); }
+
+.trend {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.trend-month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0 4px;
+  background: none;
+  color: var(--muted);
+  border-radius: 8px;
+}
+
+.trend-month:hover {
+  background: var(--soft);
+  filter: none;
+}
+
+.trend-month.current {
+  background: var(--soft);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.trend-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 90px;
+}
+
+.trend-bar {
+  width: 10px;
+  border-radius: 3px 3px 0 0;
+}
+
+.trend-label {
+  font-size: 0.8rem;
+}
+
 /* list */
 .list-header {
   display: flex;
@@ -274,23 +364,69 @@ button.link.danger {
   margin: 0;
 }
 
-.entry-list {
+/* list grouped by day */
+.day-group h3 {
+  display: flex;
+  justify-content: space-between;
+  margin: 14px 0 2px;
+  padding-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.day-group ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.entry-list li {
+.day-group li {
   display: grid;
-  grid-template-columns: 48px 1fr auto auto;
+  grid-template-columns: 36px 1fr auto auto;
   align-items: center;
   gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line);
+  padding: 8px 0;
 }
 
-.entry-list li:last-child {
-  border-bottom: none;
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--muted);
+}
+
+.icon-button:hover {
+  background: var(--soft);
+  color: var(--text);
+  filter: none;
+}
+
+.icon-button.danger:hover {
+  color: var(--red);
+}
+
+.amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .date {
@@ -312,6 +448,82 @@ button.link.danger {
 
 .buttons {
   display: flex;
+}
+
+/* filters above the list */
+.filters {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.filters input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+}
+
+.segmented {
+  display: flex;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--soft);
+}
+
+.segmented button {
+  padding: 5px 10px;
+  font-size: 0.85rem;
+  background: none;
+  color: var(--label);
+  border-radius: 7px;
+}
+
+.segmented button.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+/* "Deleted ... Undo" at the bottom of the screen */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 16px;
+  border-radius: 10px;
+  background: #1f2a26;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  animation: toast-in 0.2s ease-out;
+  max-width: calc(100vw - 32px);
+}
+
+.toast span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toast .link {
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+@keyframes toast-in {
+  from { transform: translate(-50%, 10px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { animation: none; }
 }
 
 .empty {
@@ -355,11 +567,15 @@ footer a {
     padding: 12px 16px;
   }
 
-  .entry-list li {
-    grid-template-columns: 40px 1fr auto;
+  .day-group li {
+    grid-template-columns: 36px 1fr auto;
   }
 
   .buttons {
     grid-column: 2 / -1;
+  }
+
+  .filters {
+    flex-direction: column;
   }
 }

@@ -81,3 +81,63 @@ export function toCsv(entries) {
   ].join(','));
   return ['Date,Description,Category,Type,Amount', ...rows].join('\n');
 }
+
+// one color per category, used in the donut, in the bars and in the list
+export const CATEGORY_COLORS = {
+  Food: '#f59e0b',
+  Housing: '#6366f1',
+  Transport: '#0ea5e9',
+  Fun: '#ec4899',
+  Health: '#ef4444',
+  Education: '#8b5cf6',
+  Shopping: '#14b8a6',
+  Salary: '#1f8a5e',
+  Freelance: '#22c55e',
+  Allowance: '#84cc16',
+};
+
+export const categoryColor = (category) => CATEGORY_COLORS[category] || '#94a3b8';
+
+// income and expenses of the last `count` months, oldest first, ending in `month`
+export function monthlyTotals(entries, month, count = 6) {
+  const months = Array.from({ length: count }, (_, i) => shiftMonth(month, i - count + 1));
+  const totals = Object.fromEntries(months.map((m) => [m, { month: m, income: 0, expenses: 0 }]));
+  for (const e of entries) {
+    const row = totals[monthOf(e.date)];
+    if (!row) continue;
+    if (e.type === 'income') row.income += e.amount;
+    else row.expenses += e.amount;
+  }
+  return months.map((m) => totals[m]);
+}
+
+// filter of the list: type (all, income, expense) and text in the description or category
+export function filterEntries(entries, { type = 'all', text = '' } = {}) {
+  const term = text.trim().toLowerCase();
+  return entries.filter(
+    (e) =>
+      (type === 'all' || e.type === type) &&
+      (!term || e.description.toLowerCase().includes(term) || e.category.toLowerCase().includes(term))
+  );
+}
+
+// groups entries that are already sorted by date, with the net amount of each day
+export function groupByDate(entries) {
+  const groups = [];
+  for (const e of entries) {
+    let group = groups.at(-1);
+    if (group?.date !== e.date) {
+      group = { date: e.date, entries: [], net: 0 };
+      groups.push(group);
+    }
+    group.entries.push(e);
+    group.net += e.type === 'income' ? e.amount : -e.amount;
+  }
+  return groups;
+}
+
+// "Fri, Oct 9"
+export function dayLabel(date) {
+  const [year, m, d] = date.split('-').map(Number);
+  return new Date(year, m - 1, d).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}

@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { sample } from './sample';
-import { expensesByCategory, formatMoney, inMonth, monthName, parseAmount, shiftMonth, summary, toCsv } from './finance';
+import {
+  dayLabel, expensesByCategory, filterEntries, formatMoney, groupByDate, inMonth, monthlyTotals, monthName, parseAmount,
+  shiftMonth, summary, toCsv,
+} from './finance';
 
 const entries = [
   { id: 1, description: 'Salary', amount: 300000, type: 'income', category: 'Salary', date: '2026-10-05', createdAt: 1 },
@@ -60,9 +63,37 @@ describe('finance', () => {
   });
 
   it("sample data for the current month isn't in the future", () => {
-    const dates = sample('2026-10', '2026-10-08').map((e) => e.date);
+    const dates = sample('2026-10', '2026-10-08').map((e) => e.date).filter((d) => d.startsWith('2026-10'));
     expect(dates.every((d) => d >= '2026-10-01' && d <= '2026-10-08')).toBe(true);
     // in another month it uses the normal days
     expect(sample('2026-09', '2026-10-08').at(-1).date).toBe('2026-09-22');
+  });
+
+  it('totals of the last months, oldest first', () => {
+    const totals = monthlyTotals(entries, '2026-10', 3);
+    expect(totals.map((t) => t.month)).toEqual(['2026-08', '2026-09', '2026-10']);
+    expect(totals[0]).toEqual({ month: '2026-08', income: 0, expenses: 0 });
+    expect(totals[1].expenses).toBe(2200);
+    expect(totals[2]).toEqual({ month: '2026-10', income: 300000, expenses: 168940 });
+  });
+
+  it('filters by type and by text', () => {
+    expect(filterEntries(entries, { type: 'income' }).map((e) => e.id)).toEqual([1]);
+    expect(filterEntries(entries, { text: 'FOOD' }).map((e) => e.id)).toEqual([2, 4]); // category too
+    expect(filterEntries(entries, { type: 'expense', text: 'uber' }).map((e) => e.id)).toEqual([5]);
+    expect(filterEntries(entries).length).toBe(5);
+  });
+
+  it('groups the list by day with the net amount', () => {
+    const groups = groupByDate(inMonth(entries, '2026-10'));
+    expect(groups.map((g) => g.date)).toEqual(['2026-10-06', '2026-10-05', '2026-10-03', '2026-10-01']);
+    expect(groups[1].net).toBe(300000);
+    expect(groups[3].net).toBe(-120000);
+    expect(dayLabel('2026-10-09')).toBe('Fri, Oct 9');
+  });
+
+  it('sample data also fills the two months before, for the chart', () => {
+    const months = new Set(sample('2026-10', '2026-10-08').map((e) => e.date.slice(0, 7)));
+    expect([...months].sort()).toEqual(['2026-08', '2026-09', '2026-10']);
   });
 });

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
-import { inMonth, monthName, monthOf, shiftMonth, summary, toCsv, today } from './lib/finance';
+import { useEffect, useRef, useState } from 'react';
+import { filterEntries, inMonth, monthName, monthOf, shiftMonth, summary, toCsv, today } from './lib/finance';
 import { sample } from './lib/sample';
 import EntryForm from './components/EntryForm';
 import Summary from './components/Summary';
 import Chart from './components/Chart';
 import EntryList from './components/EntryList';
+import Trend from './components/Trend';
 
 function load() {
   try {
@@ -18,6 +19,10 @@ export default function App() {
   const [entries, setEntries] = useState(load);
   const [month, setMonth] = useState(monthOf(today()));
   const [editing, setEditing] = useState(null);
+  const [filter, setFilter] = useState({ type: 'all', text: '' });
+  // the last deleted entry, so it can come back with "Undo"
+  const [deleted, setDeleted] = useState(null);
+  const undoTimer = useRef(null);
 
   useEffect(() => {
     try {
@@ -28,6 +33,8 @@ export default function App() {
   }, [entries]);
 
   const currentMonth = inMonth(entries, month);
+  const shown = filterEntries(currentMonth, filter);
+  const filtering = filter.type !== 'all' || filter.text.trim() !== '';
 
   function save(entry) {
     if (editing) {
@@ -46,11 +53,22 @@ export default function App() {
     document.querySelector('.entry-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  // deletes right away and shows "Undo" for a few seconds, instead of a confirm() before
   function remove(entry) {
-    if (!confirm(`Delete "${entry.description}"?`)) return;
     setEntries((list) => list.filter((e) => e.id !== entry.id));
     if (editing?.id === entry.id) setEditing(null);
+    setDeleted(entry);
+    clearTimeout(undoTimer.current);
+    undoTimer.current = setTimeout(() => setDeleted(null), 6000);
   }
+
+  function undo() {
+    setEntries((list) => [...list, deleted]);
+    setDeleted(null);
+    clearTimeout(undoTimer.current);
+  }
+
+  useEffect(() => () => clearTimeout(undoTimer.current), []);
 
   function exportCsv() {
     // the BOM at the start makes Excel read accents right
@@ -84,6 +102,7 @@ export default function App() {
             onCancel={() => setEditing(null)}
           />
           <Chart entries={currentMonth} />
+          <Trend entries={entries} month={month} onPick={setMonth} />
         </div>
 
         <section className="card">
@@ -92,8 +111,37 @@ export default function App() {
             {currentMonth.length > 0 && <button className="secondary" onClick={exportCsv}>Export CSV</button>}
           </div>
 
-          {currentMonth.length > 0 ? (
-            <EntryList entries={currentMonth} onEdit={edit} onDelete={remove} />
+          {currentMonth.length > 0 && (
+            <div className="filters">
+              <div className="segmented" role="group" aria-label="Show">
+                {[['all', 'All'], ['expense', 'Expenses'], ['income', 'Income']].map(([value, label]) => (
+                  <button
+                    key={value}
+                    className={filter.type === value ? 'active' : ''}
+                    aria-pressed={filter.type === value}
+                    onClick={() => setFilter((f) => ({ ...f, type: value }))}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="search"
+                placeholder="Search"
+                aria-label="Search entries"
+                value={filter.text}
+                onChange={(e) => setFilter((f) => ({ ...f, text: e.target.value }))}
+              />
+            </div>
+          )}
+
+          {shown.length > 0 ? (
+            <EntryList entries={shown} onEdit={edit} onDelete={remove} />
+          ) : filtering && currentMonth.length > 0 ? (
+            <div className="empty">
+              <p>No entries match the filter.</p>
+              <button className="secondary" onClick={() => setFilter({ type: 'all', text: '' })}>Clear filter</button>
+            </div>
           ) : (
             <div className="empty">
               <p>Nothing added in {monthName(month)}.</p>
@@ -106,6 +154,13 @@ export default function App() {
           )}
         </section>
       </div>
+
+      {deleted && (
+        <div className="toast" role="status">
+          <span>Deleted "{deleted.description}"</span>
+          <button className="link" onClick={undo}>Undo</button>
+        </div>
+      )}
 
       <footer>
         Your data is only saved in your browser · made by{' '}
