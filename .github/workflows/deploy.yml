@@ -26,6 +26,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      # the end to end tests click through the built site before it goes live
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
       - uses: actions/upload-pages-artifact@v5
         if: github.event_name == 'push'
         with:
