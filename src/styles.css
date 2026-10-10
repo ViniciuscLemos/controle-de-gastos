@@ -3,7 +3,7 @@
   --bg: #f3f5f4;
   --card: #fff;
   --text: #1f2a26;
-  --muted: #6b7a74;
+  --muted: #5f6d68;
   --label: #4b5853;
   --secondary: #e4ece8;
   --soft: #eef2f0;
@@ -11,7 +11,7 @@
   --line: #edf1ef;
   --link: #2a7a5a;
   --red: #c0392b;
-  --green: #1f8a5e;
+  --green: #1a7a53;
   --shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
@@ -76,7 +76,8 @@ button {
   border: none;
   border-radius: 8px;
   padding: 9px 14px;
-  background: #2a9d6f;
+  /* dark enough for white text to pass WCAG AA (4.5:1) */
+  background: #1f7f59;
   color: #fff;
 }
 
@@ -258,7 +259,7 @@ button.link.danger {
 
 .bar div {
   height: 100%;
-  background: #2a9d6f;
+  background: #1f7f59;
   border-radius: 4px;
 }
 
